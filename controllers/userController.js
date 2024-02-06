@@ -24,8 +24,7 @@ export const deleteUser =async (req,res)=>{
     const id =req.params.id;
     try{
          await User.findByIdAndDelete(
-            id,
-             
+            id,       
 
         );
         res.status(200).json({success:true,message:"successfully deleted",
@@ -39,10 +38,7 @@ export const deleteUser =async (req,res)=>{
 export const getSingleUser =async (req,res)=>{
     const id =req.params.id;
     try{
-        const user= await User.findById(
-            id 
-
-        );
+        const user= await User.findById(id).select('-password');
         res.status(200).json({success:true,message:"user found",
     data:user,
 })
@@ -51,15 +47,20 @@ export const getSingleUser =async (req,res)=>{
     }
 };
 
-export const getAllUser =async (req,res)=>{
+export const getAllUser = async (_req,res)=>{
     
     try{
         const users= await User.find({}).select("-password");
-        res.status(200).json({success:true,message:"users found",
-    data:users,
+
+        res.status(200).json({
+            success:true,
+            message:"users found",
+            data:users,
 })
     } catch(err) {
-        res.status(404).json({success:false, message:'not found'})
+        res.status(404).json({
+            success:false, 
+            message:'not found'})
     }
 
 
