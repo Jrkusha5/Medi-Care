@@ -31,23 +31,21 @@ export const authenticate =async (req,res,next)=>{
     }
 };
 
-export const restrict = roles=> async(req,res,next)=>{
-    const userId = req.userId
-
-    let user;
-
-    const patient=await User.findById(userId)
-    const doctor=await Doctor .findById(userId)
-
-    if(patient){
-        user=patient
-    }
-    if(doctor){
-        user=doctor
+export const restrict = (roles) => async (req, res, next) => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ success: false, message: "Unauthorized: No user ID found" });
     }
 
-    if (!roles.includes(user.role)){
-        return res.status(401).json({success:false, message:"you are not authorized"})
+    let user = await User.findById(userId) || await Doctor.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
     }
+
+    if (!roles.includes(user.role)) {
+        return res.status(403).json({ success: false, message: "You are not authorized" });
+    }
+
     next();
-}
+};

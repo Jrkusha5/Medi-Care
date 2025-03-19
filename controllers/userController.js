@@ -35,8 +35,9 @@ export const deleteUser =async (req,res)=>{
     }
 };
 
-export const getSingleUser =async (req,res)=>{
-    const id =req.params.id;
+export const getSingleUser = async (req,res)=>{
+    const id = req.params.id;
+
     try{
         const user= await User.findById(id).select('-password');
         res.status(200).json({success:true,message:"user found",
@@ -47,7 +48,7 @@ export const getSingleUser =async (req,res)=>{
     }
 };
 
-export const getAllUser = async (_req,res)=>{
+export const getAllUser = async (req,res)=>{
     
     try{
         const users= await User.find({}).select("-password");
@@ -88,14 +89,14 @@ export const getUserProfile= async(req,res)=>{
 
 export const getMyAppointments = async(req,res)=>{
     try{
-        // retrieve appoitments from booking for specific user
+       // step:1 retrieve appoitments from booking for specific user
         const bookings= await Booking.find({user:req.userId})
         //extract doctor ids from appoitment bookings
 
         const doctorIds =bookings.map(el=>el.doctor.id)
         //retrieve doctors using doctor ids
 
-        const doctors=await Doctor.find({_id: {$in:doctorIds}}).select ('-password')
+        const doctors=await Doctor.find({_id: {$in:doctorIds}}).select('-password')
           res.status(200).json({success:true, message:'Appointments are getting',data:doctors})
     }catch(err){
         res.status(500).json({success:false, message:'Something went wrong, cannot get'});

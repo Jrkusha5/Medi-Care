@@ -60,7 +60,7 @@ export const getAllDoctor =async (req,res)=>{
             ],
         }).select("-password");
         }  else{
-            const doctors= await Doctor.find({isApproved:'approved'}).select("-password");
+             doctors= await Doctor.find({isApproved:'approved'}).select("-password");
 
         }
         res.status(200).json({success:true,message:"users found",
@@ -81,7 +81,7 @@ export const getDoctorProfile =async (req,res)=>{
             return res.status(404).json({success:false, message:'Doctor not found'})
 
         }
-        const {password, ...rest}= doctor._doc ;
+        const { password, ...rest}= doctor._doc ;
         const appointments = await Booking.find({doctor:doctorId})
         res.status(200).json({success:true, message:'profile info is getting',
          data:{...rest, appointments}})
