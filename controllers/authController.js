@@ -3,13 +3,13 @@ import Doctor from '../models/DoctorSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
-const generateToken= user =>{
-    return jwt.sign({_id:user._id, role:user.role}, 
-        process.env.JWT_SECRET_KEY,
-        {
-     expiresIn:'15d',
-    });
-}
+const generateToken = (userId, role) => {
+    return jwt.sign(
+        { _id: userId, role }, // Payload (use _id instead of id)
+        process.env.JWT_SECRET_KEY, // Secret key
+        { expiresIn: '1d' } // Expiration
+    );
+};
 
 export const register = async (req,res)=>{
     const {email,password,name,role,photo,gender}= req.body;

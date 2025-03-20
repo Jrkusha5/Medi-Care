@@ -21,7 +21,7 @@ export const createReview =async(req,res)=>{
     if(!req.body.doctor) req.body.doctor= req.params.doctorId
     if(!req.body.user) req.body.user= req.userId
 
-    const newReview= newReview(req.body)
+    const newReview= new Review(req.body)
     try{
         const savedReview =await newReview.save()
 
