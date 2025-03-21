@@ -12,9 +12,7 @@ router.get('/',  getAllUser)
 router.put('/:id', authenticate, restrict(["patient"]), updateUser)
 router.delete('/:id', authenticate, restrict(["patient"]), deleteUser)
 router.get('/profile/me', authenticate, restrict(["patient"]), getUserProfile)
-router.get('/appointments/my-appointments', 
-authenticate, restrict(["patient"]),
- getMyAppointments);
+router.get('/appointments/my-appointments', authenticate, restrict(["patient"]),getMyAppointments);
 
 
 export default router;

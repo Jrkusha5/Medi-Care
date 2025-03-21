@@ -43,7 +43,8 @@ if(role==='patient'){
 
 if(role==='doctor'){
     user=new Doctor({
-        name,email,password:hashPassword,
+        name,email,
+        password:hashPassword,
         photo, gender, role
     })
 }
