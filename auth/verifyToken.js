@@ -28,7 +28,7 @@ export const authenticate = async (req, res, next) => {
         req.role = decoded.role;
 
         console.log("User ID from token:", req.userId); // Debugging log
-        console.log("User role from token:", req.role); // Debugging log
+        // Debugging log
 
         next();
     } catch (err) {
